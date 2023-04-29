@@ -2,7 +2,9 @@ version: 0.2
 env:
   secrets-manager:
     # Get SonarCloud credential from AWS Secret Manager: https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=demo-datn-codebuild&region=us-east-1
-    LOGIN: demo-datn-codebuild:sonartoken
+    # LOGIN: demo-datn-codebuild:sonartoken
+    # SonarCloud need this env var
+    SONAR_TOKEN: demo-datn-codebuild:sonartoken
     HOST: demo-datn-codebuild:HOST
     Organization: demo-datn-codebuild:Organization
     Project: demo-datn-codebuild:Project
