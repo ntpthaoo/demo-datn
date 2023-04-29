@@ -3,13 +3,11 @@ env:
   secrets-manager:
     # Get SonarCloud credential from AWS Secret Manager: https://us-east-1.console.aws.amazon.com/secretsmanager/secret?name=demo-datn-codebuild&region=us-east-1
     LOGIN: demo-datn-codebuild:sonartoken
+    # SonarCloud need this env var
+    SONAR_TOKEN: demo-datn-codebuild:sonartoken
     HOST: demo-datn-codebuild:HOST
     Organization: demo-datn-codebuild:Organization
     Project: demo-datn-codebuild:Project
-  variables:
-    SONAR_SCANNER_VERSION: 4.7.0.2747
-    SONAR_SCANNER_HOME: $HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
-    SONAR_SCANNER_OPTS: "-server"
 phases:
   pre_build:
     commands:
@@ -17,9 +15,12 @@ phases:
       - apt-get update
       - apt-get install -y jq
       - echo "Install Sonar scanner binary."
+      - export SONAR_SCANNER_VERSION=4.7.0.2747
+      - export SONAR_SCANNER_HOME=$HOME/.sonar/sonar-scanner-$SONAR_SCANNER_VERSION-linux
       - curl --create-dirs -sSLo $HOME/.sonar/sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-$SONAR_SCANNER_VERSION-linux.zip
       - unzip -o $HOME/.sonar/sonar-scanner.zip -d $HOME/.sonar/
       - export PATH=$SONAR_SCANNER_HOME/bin:$PATH
+      - export SONAR_SCANNER_OPTS="-server"
   build:
     commands:
       - echo "2. Build step"

@@ -35,6 +35,7 @@ ECR Policy:
 }
 ```
 - codebuild
+- SonnarCloud integration
 ### 3. CD
 #### 3.1: ASG (EC2)
 - IAM Role
